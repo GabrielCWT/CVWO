@@ -1,5 +1,6 @@
 import Home from "./pages/Home";
 import StyledThreadView from "./pages/StyledThreadView";
+import CreatePost from "./pages/CreatePost";
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -21,6 +22,7 @@ const App: React.FC = () => {
                     <Routes>
                         <Route path="/test" element={<StyledThreadView />} />
                         <Route path="/" element={<Home />} />
+                        <Route path="/create" element={<CreatePost />} />
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>
