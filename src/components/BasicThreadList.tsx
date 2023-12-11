@@ -10,6 +10,9 @@ const BasicThreadList: React.FC = () => {
                 <li>
                     <Link to="/test">{"Posts"}</Link>
                 </li>
+                <li>
+                    <Link to="/create">{"Create"}</Link>
+                </li>
             </ul>
         </div>
     );
