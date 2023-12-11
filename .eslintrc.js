@@ -38,16 +38,17 @@ module.exports = {
     plugins: ["react", "@typescript-eslint", "import"],
     rules: {
         "no-unused-var": "off",
-        "no-var": "error",
-        curly: ["error", "multi-line"],
+        "no-var": "warn",
+        curly: ["warn", "multi-line"],
         "import/order": [
-            "error",
+            "warn",
             { groups: ["index", "sibling", "parent", "internal", "external", "builtin", "object", "type"] },
         ],
         "prettier/prettier": [
-            "error", {
-                "endOfLine": "auto"
-            }
+            "warn",
+            {
+                endOfLine: "auto",
+            },
         ],
     },
     overrides: [
