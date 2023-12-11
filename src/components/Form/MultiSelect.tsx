@@ -36,33 +36,31 @@ const MultiSelect: React.FC<Props> = ({ label = "Options", options = [] }) => {
     };
 
     return (
-        <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-chip-label">{label}</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={selectedOptions}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {options.map((name) => (
-                        <MenuItem key={name} value={name}>
-                            {name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <FormControl sx={{ width: 300 }}>
+            <InputLabel id={label + "-multi-chip-label"}>{label}</InputLabel>
+            <Select
+                labelId={label + "-multi-chip-label"}
+                id={label + "-multi-chip"}
+                multiple
+                value={selectedOptions}
+                onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                            <Chip key={value} label={value} />
+                        ))}
+                    </Box>
+                )}
+                MenuProps={MenuProps}
+            >
+                {options.map((name) => (
+                    <MenuItem key={name} value={name}>
+                        {name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 };
 
