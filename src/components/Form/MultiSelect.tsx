@@ -10,6 +10,7 @@ import Chip from "@mui/material/Chip";
 
 type Props = {
     label: string;
+    name: string;
     options: string[];
 };
 
@@ -24,7 +25,7 @@ const MenuProps = {
     },
 };
 
-const MultiSelect: React.FC<Props> = ({ label = "Options", options = [] }) => {
+const MultiSelect: React.FC<Props> = ({ label = "Options", options = [], name = label }) => {
     const [selectedOptions, setSelectedOptions] = React.useState<string[]>([]);
 
     const handleChange = (event: SelectChangeEvent<typeof selectedOptions>) => {
@@ -41,6 +42,7 @@ const MultiSelect: React.FC<Props> = ({ label = "Options", options = [] }) => {
             <Select
                 labelId={label + "-multi-chip-label"}
                 id={label + "-multi-chip"}
+                name={name}
                 multiple
                 value={selectedOptions}
                 onChange={handleChange}
