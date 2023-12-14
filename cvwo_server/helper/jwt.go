@@ -16,7 +16,7 @@ func ValidateJWT(ctx *gin.Context) error {
 		return err
 	}
 	if claims, ok := jwtToken.Claims.(jwt.MapClaims); ok && jwtToken.Valid {
-		if float64(claims["exp"].(float64)) < float64(time.Now().Unix()) {
+		if float64(claims["exp"].(float64)) > float64(time.Now().Unix()) {
 			return nil
 		} else {
 			return errors.New("Error token expired")
@@ -37,6 +37,7 @@ func getCurrentUser(ctx *gin.Context) (model.User, error) {
 	if err != nil {
 		return model.User{}, err
 	}
+	ctx.Set("user", user)
 	return user, nil
 }
 
