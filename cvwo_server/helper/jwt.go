@@ -26,7 +26,19 @@ func ValidateJWT(ctx *gin.Context) error {
 	}
 }
 
-
+func getCurrentUser(ctx *gin.Context) (model.User, error) {
+	err := ValidateJWT(ctx)
+	if err != nil {
+		return model.User{}, err
+	}
+	jwtToken, err := getToken(ctx)
+	userID := uint(jwtToken.Claims.(jwt.MapClaims)["sub"].(float64))
+	user, err := model.FindByID(userID)
+	if err != nil {
+		return model.User{}, err
+	}
+	return user, nil
+}
 
 func getToken(ctx *gin.Context) (*jwt.Token, error) {
 	jwtTokenString, err := ctx.Cookie("Authorisation")
