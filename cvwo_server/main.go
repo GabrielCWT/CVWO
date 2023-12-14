@@ -8,6 +8,7 @@ import (
     "cvwo_server/middleware"
     "github.com/joho/godotenv"
     "github.com/gin-gonic/gin"
+    "github.com/gin-contrib/cors"
     "log"
 )
 
@@ -32,6 +33,11 @@ func loadEnv() {
 
 func startServer() {
     router := gin.Default()
+
+    config := cors.DefaultConfig()
+    config.AllowOrigins = []string{"http://localhost:3000"}
+    router.Use(cors.New(config))
+
     routes := router.Group("/auth")
     routes.POST("/signup", controller.SignUp)
     routes.POST("/login", controller.Login)
