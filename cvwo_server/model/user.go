@@ -45,3 +45,12 @@ func FindByUsername(username string) (User, error) {
 	}
 	return user, nil
 }
+
+func FindByID(id uint) (User, error) {
+	var user User
+	err := database.Database.Where("id = ?", id).Find(&user).Error
+	if err != nil {
+		return User{}, err
+	}
+	return user, nil
+}
