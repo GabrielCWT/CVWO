@@ -5,6 +5,7 @@ import (
     "cvwo_server/controller"
     "cvwo_server/database"
     "cvwo_server/model"
+    "cvwo_server/middleware"
     "github.com/joho/godotenv"
     "github.com/gin-gonic/gin"
     "log"
@@ -31,9 +32,13 @@ func loadEnv() {
 
 func startServer() {
     router := gin.Default()
-    routes := router.Group("/api")
+    routes := router.Group("/auth")
     routes.POST("/signup", controller.SignUp)
     routes.POST("/login", controller.Login)
+
+    authorisedRoutes := router.Group("/api")
+    authorisedRoutes.Use(middleware.JWTAuthMiddleware())
+    authorisedRoutes.GET("/test", controller.Test)
     router.Run(":8000")
     fmt.Println("Server running on port 8000")
 }
