@@ -10,8 +10,8 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"size:255;not null;unique" json:"username"`
-	Password string `gorm:"size:255;not null;" json:"-"`
+	Username string `gorm:"not null;unique" json:"username"`
+	Password string `gorm:"not null;" json:"-"`
 }
 
 func (user *User) Save() (*User, error) {
@@ -22,6 +22,7 @@ func (user *User) Save() (*User, error) {
 	return user, nil
 }
 
+// Hook to hash password before saving
 func (user *User) BeforeSave(*gorm.DB) error{
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
