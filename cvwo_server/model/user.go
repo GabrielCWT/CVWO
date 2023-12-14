@@ -31,3 +31,16 @@ func (user *User) BeforeSave(*gorm.DB) error{
 	user.Username = html.EscapeString(strings.TrimSpace(user.Username))
 	return nil
 }
+
+func (user *User) ValidatePassword(password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+}
+
+func FindByUsername(username string) (User, error) {
+	var user User
+	err := database.Database.Where("username = ?", username).Find(&user).Error
+	if err != nil {
+		return User{}, err
+	}
+	return user, nil
+}

@@ -33,7 +33,7 @@ func startServer() {
     router := gin.Default()
     routes := router.Group("/api")
     routes.POST("/signup", controller.SignUp)
-
+    routes.POST("/login", controller.Login)
     router.Run(":8000")
     fmt.Println("Server running on port 8000")
 }
