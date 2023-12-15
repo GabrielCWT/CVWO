@@ -1,27 +1,68 @@
 import { CurrentUserContext } from "../App";
-import MultiSelect from "../components/Form/MultiSelect";
 import { Navigate } from "react-router-dom";
-import { Box, Container, TextField, Button } from "@mui/material";
+import {
+    Box,
+    Container,
+    TextField,
+    Button,
+    Select,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    FormHelperText,
+    // eslint-disable-next-line import/named
+    SelectChangeEvent,
+} from "@mui/material";
 import React, { useContext } from "react";
+import axios from "axios";
 
-const categories = ["Technology", "Sports", "Politics", "Entertainment", "Science", "Health"];
+const categories = ["Technology", "Sports", "Politics", "Entertainment", "Science", "Health", "Gaming"];
 
 const CreatePost: React.FC = () => {
     const { currentUser } = useContext(CurrentUserContext);
-    if (currentUser.isSignedIn) {
+    const [selectedCategory, setSelectedCategory] = React.useState<string>(categories[0]);
+    const [helperMessage, setHelperMessage] = React.useState<string>("");
+
+    const handleChange = (e: SelectChangeEvent) => {
+        setSelectedCategory(e.target.value as string);
+    };
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        console.log(e.currentTarget);
+        try {
+            const res = await axios.post("http://localhost:8000/api/posts/add", data, { withCredentials: true });
+            console.log(res);
+            // <Navigate to="/" />; // TODO redirect to post page
+        } catch (err) {
+            setHelperMessage("Error creating post");
+        }
+    };
+    if (!currentUser.isSignedIn) {
         return <Navigate to="/login" />;
     }
     return (
         <Container>
             <h1>{"Create Post"}</h1>
-            <Box
-                component="form"
-                sx={{ "& > :not(style)": { m: 1 }, display: "grid" }}
-                method="POST"
-                action="http://www.foo.com"
-            >
+            <Box component="form" sx={{ "& > :not(style)": { m: 1 }, display: "grid" }} onSubmit={handleSubmit}>
                 <TextField id="title" name="title" label="Title" variant="standard" required autoFocus />
-                <MultiSelect label="Tags" name="tags" options={categories} />
+                <FormControl fullWidth>
+                    <InputLabel id="category-label">Category</InputLabel>
+                    <Select
+                        labelId="category"
+                        id="category"
+                        name="category"
+                        label="Category"
+                        value={selectedCategory}
+                        onChange={handleChange}
+                    >
+                        {categories.map((category) => (
+                            <MenuItem key={category} value={category}>
+                                {category}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <TextField
                     id="content"
                     name="content"
@@ -31,6 +72,7 @@ const CreatePost: React.FC = () => {
                     fullWidth
                     required
                 />
+                <FormHelperText id="my-helper-text">{helperMessage}</FormHelperText>
                 <Button type="submit" variant="contained">
                     Submit
                 </Button>
