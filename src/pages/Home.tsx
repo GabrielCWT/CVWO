@@ -1,8 +1,15 @@
+import { getAllPosts } from "../scripts/apiHelpers";
 import BasicThreadList from "../components/BasicThreadList";
+import Posts from "../components/Posts";
 import { CurrentUserContext } from "../App";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 const Home: React.FC = () => {
+    const [data, setData] = React.useState<PostType[]>([]);
+    useEffect(() => {
+        getAllPosts().then((data) => setData(data));
+        // getAllPosts().then((data) => console.log(data, typeof data));
+    }, []);
     const { currentUser } = useContext(CurrentUserContext);
     return (
         <>
@@ -12,6 +19,7 @@ const Home: React.FC = () => {
             </h3>
             <br />
             <BasicThreadList />
+            {data && <Posts data={data} />}
         </>
     );
 };
