@@ -42,5 +42,13 @@ func GetAllPosts(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"data": posts})
 }
 
-// TODO func GetPostByCategory
+func GetPostByCategory(ctx *gin.Context) {
+	category := ctx.Param("category")
+	posts, err := model.GetPostByCategory(category)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting posts by category"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"data": posts})
+}
 
