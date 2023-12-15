@@ -4,6 +4,7 @@ import CreatePost from "./pages/CreatePost";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -56,6 +57,7 @@ const App: React.FC = () => {
                                 <Route path="create" element={<CreatePost />} />
                                 <Route path="signup" element={<Signup />} />
                                 <Route path="login" element={<Login />} />
+                                <Route path="logout" element={<Logout />} />
                             </Route>
                         </Routes>
                     </BrowserRouter>
