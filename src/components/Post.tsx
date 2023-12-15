@@ -11,6 +11,7 @@ const Post: React.FC<Props> = ({ post }) => {
         <>
             <ListItem>
                 <Link to={`/posts/${post.ID}`}>{post.Title}</Link>
+                <Link to={`/posts/${post.Category}`}>{post.Category}</Link>
             </ListItem>
             <Divider />
         </>
