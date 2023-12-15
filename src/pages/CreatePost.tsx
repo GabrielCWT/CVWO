@@ -10,7 +10,6 @@ import {
     InputLabel,
     MenuItem,
     FormHelperText,
-    // eslint-disable-next-line import/named
     SelectChangeEvent,
 } from "@mui/material";
 import React, { useContext } from "react";

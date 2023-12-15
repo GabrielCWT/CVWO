@@ -14,6 +14,7 @@ module.exports = {
         react: {
             version: "detect",
         },
+        ts: { alwaysTryTypes: true },
     },
     extends: [
         "eslint:recommended",
@@ -22,6 +23,7 @@ module.exports = {
         "plugin:@typescript-eslint/recommended",
         "plugin:prettier/recommended",
         "plugin:import/recommended",
+        "plugin:import/typescript",
     ],
     globals: {
         Atomics: "readonly",

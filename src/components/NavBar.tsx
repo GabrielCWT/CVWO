@@ -8,25 +8,25 @@ const NavBar: React.FC = () => {
     return (
         <AppBar position="sticky">
             <Toolbar sx={{ gap: 8, alignItems: "center", justifyContent: "center", fontSize: 20 }}>
-                <Link to="/" fontColor="white">
+                <Link to="/" sx={{ color: "white" }}>
                     Home
                 </Link>
-                <Link to="/test" fontColor="white">
+                <Link to="/test" sx={{ color: "white" }}>
                     Posts
                 </Link>
-                <Link to="/create" fontColor="white">
+                <Link to="/create" sx={{ color: "white" }}>
                     Create
                 </Link>
                 {currentUser.isSignedIn ? (
-                    <Link to="/logout" fontColor="white">
+                    <Link to="/logout" sx={{ color: "white" }}>
                         Logout
                     </Link>
                 ) : (
                     <>
-                        <Link to="/signup" fontColor="white">
+                        <Link to="/signup" sx={{ color: "white" }}>
                             Signup
                         </Link>
-                        <Link to="/login" fontColor="white">
+                        <Link to="/login" sx={{ color: "white" }}>
                             Login
                         </Link>
                     </>
