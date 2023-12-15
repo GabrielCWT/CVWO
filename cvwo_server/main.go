@@ -36,6 +36,7 @@ func startServer() {
 
     config := cors.DefaultConfig()
     config.AllowOrigins = []string{"http://localhost:3000"}
+    config.AllowCredentials = true
     router.Use(cors.New(config))
 
     routes := router.Group("/auth")
