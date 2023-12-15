@@ -62,6 +62,12 @@ func Login(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"data": user, "token": jwtTokenString})
 }
 
+func Logout(ctx *gin.Context) {
+	ctx.SetSameSite(http.SameSiteStrictMode)
+	ctx.SetCookie("Authorisation", "", -1, "", "", false, true)
+	ctx.JSON(http.StatusOK, gin.H{"data": "Logged out"})
+}
+
 func Verify(ctx *gin.Context) {
 	user, err := helper.CurrentUser(ctx)
 	if err != nil {
