@@ -61,3 +61,34 @@ func GetPostByID(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{"data": post})
 }
+
+func UpdatePost(ctx *gin.Context) {
+	id := ctx.Param("id")
+	post, err := model.GetPostByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting post by id"})
+		return
+	}
+	
+	user, err := helper.CurrentUser(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting current user"})
+		return
+	}
+	if post.UserID != user.ID {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error: No permission to edit post"})
+		return
+	}
+
+	var updatedPost model.Post
+	if err := ctx.ShouldBind(&updatedPost); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error binding input"})
+		return
+	}
+	post, err = model.UpdatePost(id, updatedPost)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error saving post"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"data": post})
+}

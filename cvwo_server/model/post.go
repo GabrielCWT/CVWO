@@ -1,6 +1,7 @@
 package model
 import (
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"cvwo_server/database"
 )
 type Post struct {
@@ -45,4 +46,14 @@ func GetPostByID(id string) (*Post, error) {
 		return nil, err
 	}
 	return &post, nil
+}
+
+func UpdatePost(id string, post Post) (*Post, error) {
+	var updatedPosts []Post
+	err := database.Database.Model(&updatedPosts).Clauses(clause.Returning{}).Where("id = ?", id).Updates(post).Error
+	if err != nil {
+		return nil, err
+	}
+	updatedPost := &updatedPosts[0]
+	return updatedPost, nil
 }
