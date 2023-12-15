@@ -45,13 +45,15 @@ func startServer() {
     routes.GET("/verify", controller.Verify)
     routes.POST("/logout", controller.Logout)
 
+    noAuthRoutes := router.Group("/api")
+    noAuthRoutes.GET("/posts", controller.GetAllPosts)
+    noAuthRoutes.GET("/posts/:category", controller.GetPostByCategory)
+    noAuthRoutes.GET("/posts/post/:id", controller.GetPostByID)
+
     authorisedRoutes := router.Group("/api")
     authorisedRoutes.Use(middleware.JWTAuthMiddleware())
     authorisedRoutes.GET("/test", controller.Test)
     authorisedRoutes.POST("/posts/add", controller.AddPost)
-    authorisedRoutes.GET("/posts", controller.GetAllPosts)
-    authorisedRoutes.GET("/posts/:category", controller.GetPostByCategory)
-    authorisedRoutes.GET("/posts/post/:id", controller.GetPostByID)
     authorisedRoutes.PUT("/posts/post/:id", controller.UpdatePost)
     // TODO authorisedRoutes.DELETE("/posts/:id", controller.DeletePost)
     router.Run(":8000")
