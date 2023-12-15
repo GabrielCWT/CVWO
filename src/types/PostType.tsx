@@ -9,3 +9,5 @@ type PostType = {
     Username: string;
     UserID: number;
 };
+
+export default PostType;
