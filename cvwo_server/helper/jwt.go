@@ -26,7 +26,7 @@ func ValidateJWT(ctx *gin.Context) error {
 	}
 }
 
-func getCurrentUser(ctx *gin.Context) (model.User, error) {
+func CurrentUser(ctx *gin.Context) (model.User, error) {
 	err := ValidateJWT(ctx)
 	if err != nil {
 		return model.User{}, err

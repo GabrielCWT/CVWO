@@ -41,6 +41,7 @@ func startServer() {
     routes := router.Group("/auth")
     routes.POST("/signup", controller.SignUp)
     routes.POST("/login", controller.Login)
+    routes.GET("/verify", controller.Verify)
 
     authorisedRoutes := router.Group("/api")
     authorisedRoutes.Use(middleware.JWTAuthMiddleware())

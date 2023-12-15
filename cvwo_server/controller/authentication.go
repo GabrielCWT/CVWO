@@ -4,6 +4,7 @@ import (
 	"time"
 	"os"
 	"cvwo_server/model"
+	"cvwo_server/helper"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"github.com/golang-jwt/jwt/v5"
@@ -59,4 +60,13 @@ func Login(ctx *gin.Context) {
 	ctx.SetSameSite(http.SameSiteStrictMode)
 	ctx.SetCookie("Authorisation", jwtTokenString, 60*60*24*30, "", "", false, true)
 	ctx.JSON(http.StatusOK, gin.H{"data": user, "token": jwtTokenString})
+}
+
+func Verify(ctx *gin.Context) {
+	user, err := helper.CurrentUser(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error verifying user"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"data": user})
 }
