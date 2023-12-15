@@ -1,4 +1,5 @@
 import Post from "./Post";
+import PostType from "../types/PostType";
 import { List } from "@mui/material";
 import React from "react";
 

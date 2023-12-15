@@ -1,3 +1,4 @@
+import PostType from "../types/PostType";
 import { getAllPosts } from "../scripts/apiHelpers";
 import BasicThreadList from "../components/BasicThreadList";
 import Posts from "../components/Posts";
