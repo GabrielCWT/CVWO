@@ -40,7 +40,7 @@ const Login: React.FC = () => {
                 display: "grid",
             }}
         >
-            <h1>Signup Page</h1>
+            <h1>Login Page</h1>
             <Box component="form" sx={{ display: "grid", gap: 5 }} onSubmit={handleSubmit}>
                 <TextField id="username" name="username" label="Username" variant="standard" required autoFocus />
                 <TextField id="password" name="password" label="Password" variant="standard" required autoFocus />
