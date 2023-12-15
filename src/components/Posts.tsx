@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Posts: React.FC<Props> = ({ data }) => {
-    console.log(data);
     return (
         <List>
             {data.map((post) => (

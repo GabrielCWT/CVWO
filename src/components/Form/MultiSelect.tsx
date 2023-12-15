@@ -32,7 +32,6 @@ const MultiSelect: React.FC<Props> = ({ label = "Options", options = [], name = 
         const {
             target: { value },
         } = event;
-        console.log(value);
         setSelectedOptions(typeof value === "string" ? value.split(",") : value);
     };
 

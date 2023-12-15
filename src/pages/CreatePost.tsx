@@ -1,10 +1,16 @@
+import { CurrentUserContext } from "../App";
 import MultiSelect from "../components/Form/MultiSelect";
+import { Navigate } from "react-router-dom";
 import { Box, Container, TextField, Button } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 
 const categories = ["Technology", "Sports", "Politics", "Entertainment", "Science", "Health"];
 
 const CreatePost: React.FC = () => {
+    const { currentUser } = useContext(CurrentUserContext);
+    if (currentUser.isSignedIn) {
+        return <Navigate to="/login" />;
+    }
     return (
         <Container>
             <h1>{"Create Post"}</h1>

@@ -10,10 +10,6 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        console.log({
-            username: data.get("username"),
-            password: data.get("password"),
-        });
         try {
             const res = await axios.post("http://localhost:8000/auth/signup", data);
             console.log(res);

@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Post: React.FC<Props> = ({ post }) => {
-    console.log(post);
     return (
         <>
             <ListItem>
