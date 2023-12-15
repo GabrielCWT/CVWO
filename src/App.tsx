@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import PostsPage from "./pages/PostsPage";
 import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -53,8 +54,9 @@ const App: React.FC = () => {
                         <Routes>
                             <Route path="/" element={<Layout />}>
                                 <Route index element={<Home />} />
+                                <Route path="posts/:category?/:id?" element={<PostsPage />} />
+                                <Route path="posts/create" element={<CreatePost />} />
                                 <Route path="test" element={<StyledThreadView />} />
-                                <Route path="create" element={<CreatePost />} />
                                 <Route path="signup" element={<Signup />} />
                                 <Route path="login" element={<Login />} />
                                 <Route path="logout" element={<Logout />} />

@@ -11,10 +11,10 @@ const NavBar: React.FC = () => {
                 <Link to="/" sx={{ color: "white" }}>
                     Home
                 </Link>
-                <Link to="/test" sx={{ color: "white" }}>
+                <Link to="/posts" sx={{ color: "white" }}>
                     Posts
                 </Link>
-                <Link to="/create" sx={{ color: "white" }}>
+                <Link to="/posts/create" sx={{ color: "white" }}>
                     Create
                 </Link>
                 {currentUser.isSignedIn ? (
