@@ -52,3 +52,12 @@ func GetPostByCategory(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"data": posts})
 }
 
+func GetPostByID(ctx *gin.Context) {
+	id := ctx.Param("id")
+	post, err := model.GetPostByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting post by id"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"data": post})
+}

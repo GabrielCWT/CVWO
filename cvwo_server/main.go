@@ -48,8 +48,11 @@ func startServer() {
     authorisedRoutes.Use(middleware.JWTAuthMiddleware())
     authorisedRoutes.GET("/test", controller.Test)
     authorisedRoutes.POST("/posts/add", controller.AddPost)
-    authorisedRoutes.GET("/posts/:category", controller.GetPostByCategory)
     authorisedRoutes.GET("/posts", controller.GetAllPosts)
+    authorisedRoutes.GET("/posts/:category", controller.GetPostByCategory)
+    authorisedRoutes.GET("/posts/post/:id", controller.GetPostByID)
+    // TODO authorisedRoutes.PUT("/posts/:id", controller.UpdatePost)
+    // TODO authorisedRoutes.DELETE("/posts/:id", controller.DeletePost)
     router.Run(":8000")
     fmt.Println("Server running on port 8000")
 }
