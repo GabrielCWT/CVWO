@@ -5,15 +5,12 @@ import { Link as MUILink } from "@mui/material";
 interface Props {
     to: string;
     children: string;
+    fontColor?: string;
 }
 
-const cssProperties = {
-    color: "white",
-};
-
-const Link: React.FC<Props> = ({ to, children }) => {
+const Link: React.FC<Props> = ({ to, children, fontColor }) => {
     return (
-        <MUILink component={RouterLink} to={to} sx={cssProperties}>
+        <MUILink component={RouterLink} to={to} sx={{ color: fontColor }}>
             {children}
         </MUILink>
     );
