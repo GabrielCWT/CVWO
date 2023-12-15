@@ -11,7 +11,7 @@ const Login: React.FC = () => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         try {
-            const res = await axios.post("http://localhost:8000/auth/login", data);
+            const res = await axios.post("http://localhost:8000/auth/login", data, { withCredentials: true });
             console.log(res);
             setCurrentUser({ isSignedIn: true, username: data.get("username") as string });
         } catch (err) {
