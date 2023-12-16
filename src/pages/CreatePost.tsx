@@ -1,5 +1,5 @@
 import { CurrentUserContext } from "../App";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
     Box,
     Container,
@@ -21,6 +21,7 @@ const CreatePost: React.FC = () => {
     const { currentUser } = useContext(CurrentUserContext);
     const [selectedCategory, setSelectedCategory] = React.useState<string>(categories[0]);
     const [helperMessage, setHelperMessage] = React.useState<string>("");
+    const navigate = useNavigate();
 
     const handleChange = (e: SelectChangeEvent) => {
         setSelectedCategory(e.target.value as string);
@@ -28,11 +29,11 @@ const CreatePost: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        console.log(e.currentTarget);
         try {
             const res = await axios.post("http://localhost:8000/api/posts/add", data, { withCredentials: true });
-            console.log(res);
-            // <Navigate to="/" />; // TODO redirect to post page
+            const category = res.data.data.Category;
+            const postID = res.data.data.ID;
+            navigate(`/posts/${category}/${postID}`);
         } catch (err) {
             setHelperMessage("Error creating post");
         }
