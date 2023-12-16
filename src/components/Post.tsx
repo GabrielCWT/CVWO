@@ -5,9 +5,10 @@ import React from "react";
 
 interface Props {
     data: PostType;
+    isAuthorised: boolean;
 }
 
-const Post: React.FC<Props> = ({ data }) => {
+const Post: React.FC<Props> = ({ data, isAuthorised }) => {
     return (
         <Box id="post-content">
             <Box>
@@ -18,6 +19,7 @@ const Post: React.FC<Props> = ({ data }) => {
                 <Typography variant="subtitle2" component="h3">
                     Written By: {data.Username}
                 </Typography>
+                {isAuthorised && <Link to={`/posts/${data.Category}/${data.ID}/edit`}>Edit Post</Link>}
             </Box>
             <Typography variant="body1" component="p">
                 {data.Content}

@@ -10,8 +10,11 @@ import { useParams } from "react-router-dom";
 const PostPage: React.FC = () => {
     const { postID } = useParams();
     const [hasError, setError] = useState<boolean>(false);
+    const [isAuthorised, setIsAuthorised] = useState<boolean>(false); // TODO: check if user has permission to edit post
     const [post, setPost] = useState<PostType | null>(null);
     useEffect(() => {
+        // TODO: check if user has permission to edit post
+        setIsAuthorised(true);
         if (postID) {
             getPostByID(postID)
                 .then((posts) => setPost(posts))
@@ -26,7 +29,7 @@ const PostPage: React.FC = () => {
     return (
         <Container>
             <Suspense fallback={<Loading />}>
-                {hasError ? <Error /> : post ? <Post data={post} /> : <Loading />}
+                {hasError ? <Error /> : post ? <Post data={post} isAuthorised={isAuthorised} /> : <Loading />}
             </Suspense>
         </Container>
     );
