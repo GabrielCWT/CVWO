@@ -3,7 +3,7 @@ import Error from "../components/Error";
 import Posts from "../components/Posts";
 import { getAllPosts, getPostByCategory, getPostByID } from "../scripts/apiHelpers";
 import PostType from "../types/PostType";
-import { Container, Select, SelectChangeEvent, MenuItem } from "@mui/material";
+import { Container, Select, SelectChangeEvent, MenuItem, FormControl, InputLabel } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -52,13 +52,16 @@ const PostsPage: React.FC = () => {
     return (
         <Container>
             <Suspense fallback={<Loading />}>
-                <Select label="Category" defaultValue={category ? category : "All Posts"} onChange={handleNavigate}>
-                    {categoryOptions.map((category) => (
-                        <MenuItem key={category} value={category}>
-                            {category}
-                        </MenuItem>
-                    ))}
-                </Select>
+                <FormControl>
+                    <InputLabel id="category-select-label">Category</InputLabel>
+                    <Select label="Category" defaultValue={category ? category : "All Posts"} onChange={handleNavigate}>
+                        {categoryOptions.map((category) => (
+                            <MenuItem key={category} value={category}>
+                                {category}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 {hasError ? <Error /> : posts ? <Posts data={posts} /> : <Loading />}
             </Suspense>
         </Container>
