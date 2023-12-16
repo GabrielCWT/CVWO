@@ -7,11 +7,11 @@ interface Props {
     post: PostType;
 }
 
-const Post: React.FC<Props> = ({ post }) => {
+const PostList: React.FC<Props> = ({ post }) => {
     return (
         <>
             <ListItem>
-                <Link to={`/posts/${post.ID}`}>{post.Title}</Link>
+                <Link to={`/posts/${post.Category}/${post.ID}`}>{post.Title}</Link>
                 <Link to={`/posts/${post.Category}`}>{post.Category}</Link>
             </ListItem>
             <Divider />
@@ -19,4 +19,4 @@ const Post: React.FC<Props> = ({ post }) => {
     );
 };
 
-export default Post;
+export default PostList;

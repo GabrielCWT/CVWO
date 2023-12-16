@@ -1,4 +1,4 @@
-import Post from "./Post";
+import PostList from "./PostList";
 import PostType from "../types/PostType";
 import { List } from "@mui/material";
 import React from "react";
@@ -11,7 +11,7 @@ const Posts: React.FC<Props> = ({ data }) => {
     return (
         <List>
             {data.map((post) => (
-                <Post post={post} key={post.ID} />
+                <PostList post={post} key={post.ID} />
             ))}
         </List>
     );
