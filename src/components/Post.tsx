@@ -1,4 +1,5 @@
 import Link from "./Link";
+import PostType from "../types/PostType";
 import { Divider, ListItem } from "@mui/material";
 import React from "react";
 
