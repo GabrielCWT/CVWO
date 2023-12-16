@@ -3,12 +3,25 @@ import Error from "../components/Error";
 import Posts from "../components/Posts";
 import { getAllPosts, getPostByCategory, getPostByID } from "../scripts/apiHelpers";
 import PostType from "../types/PostType";
-import { Container } from "@mui/material";
+import { Container, Select, SelectChangeEvent, MenuItem } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
+const categoryOptions = [
+    "All Posts",
+    "Technology",
+    "Sports",
+    "Politics",
+    "Entertainment",
+    "Science",
+    "Health",
+    "Gaming",
+];
 const PostsPage: React.FC = () => {
     const { category, postID } = useParams();
+    const navigate = useNavigate();
+    // TODO backend should hold a list of categories
+    // const [categoryOptions, setCategoryOptions] = useState<string[] | null>(null);
     const [hasError, setError] = useState<boolean>(false);
     const [posts, setPosts] = useState<PostType[] | null>(null);
     useEffect(() => {
@@ -32,9 +45,20 @@ const PostsPage: React.FC = () => {
                 });
         }
     }, [category, postID]);
+
+    const handleNavigate = (e: SelectChangeEvent) => {
+        navigate(`/posts/${e.target.value}`);
+    };
     return (
         <Container>
             <Suspense fallback={<Loading />}>
+                <Select label="Category" defaultValue={category ? category : "All Posts"} onChange={handleNavigate}>
+                    {categoryOptions.map((category) => (
+                        <MenuItem key={category} value={category}>
+                            {category}
+                        </MenuItem>
+                    ))}
+                </Select>
                 {hasError ? <Error /> : posts ? <Posts data={posts} /> : <Loading />}
             </Suspense>
         </Container>
