@@ -47,7 +47,12 @@ const PostsPage: React.FC = () => {
     }, [category, postID]);
 
     const handleNavigate = (e: SelectChangeEvent) => {
-        navigate(`/posts/${e.target.value}`);
+        const value = e.target.value;
+        if (value === "All Posts") {
+            navigate("/posts");
+        } else {
+            navigate(`/posts/${e.target.value}`);
+        }
     };
     return (
         <Container>
