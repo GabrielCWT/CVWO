@@ -22,6 +22,7 @@ func loadDatabase() {
     database.Connect()
     database.Database.AutoMigrate(&model.User{})
     database.Database.AutoMigrate(&model.Post{})
+    database.Database.AutoMigrate(&model.Comment{})
 }
 
 func loadEnv() {
@@ -56,6 +57,10 @@ func startServer() {
     authorisedRoutes.POST("/posts/add", controller.AddPost)
     authorisedRoutes.PUT("/posts/post/:id", controller.UpdatePost)
     authorisedRoutes.DELETE("/posts/post/:id", controller.DeletePost)
+    authorisedRoutes.GET("/posts/post/:id/comments/", controller.GetComments)
+    authorisedRoutes.POST("/posts/post/:id/comments/add", controller.AddComment)
+    authorisedRoutes.PUT("/posts/post/:id/comments/:commentID", controller.UpdateComment)
+    // TODO authorisedRoutes.DELETE("/posts/post/:id/comments/:commentID", controller.DeleteComment)
     router.Run(":8000")
     fmt.Println("Server running on port 8000")
 }
