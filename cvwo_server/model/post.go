@@ -23,7 +23,7 @@ func (post *Post) Save() (*Post, error) {
 
 func GetAllPosts() ([]Post, error) {
 	var posts []Post
-	err := database.Database.Find(&posts).Error
+	err := database.Database.Select("id", "created_at", "title", "category", "username").Find(&posts).Error
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +32,7 @@ func GetAllPosts() ([]Post, error) {
 
 func GetPostByCategory(category string) ([]Post, error) {
 	var posts []Post
-	err := database.Database.Where("category = ?", category).Find(&posts).Error
+	err := database.Database.Select("id", "created_at", "title", "category", "username").Where("category = ?", category).Find(&posts).Error
 	if err != nil {
 		return nil, err
 	}
