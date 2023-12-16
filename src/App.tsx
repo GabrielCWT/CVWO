@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import PostsPage from "./pages/PostsPage";
+import EditPost from "./pages/EditPost";
 import PostPage from "./pages/PostPage";
 import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
@@ -57,6 +58,7 @@ const App: React.FC = () => {
                                 <Route index element={<Home />} />
                                 <Route path="posts/:category?/" element={<PostsPage />} />
                                 <Route path="posts/:category/:postID" element={<PostPage />} />
+                                <Route path="posts/:category/:postID/edit" element={<EditPost />} />
                                 <Route path="posts/create" element={<CreatePost />} />
                                 <Route path="test" element={<StyledThreadView />} />
                                 <Route path="signup" element={<Signup />} />
