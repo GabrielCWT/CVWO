@@ -1,5 +1,5 @@
 import { CurrentUserContext } from "../App";
-import { Box, Container, TextField, Button, FormHelperText } from "@mui/material";
+import { Box, Container, TextField, Button, FormHelperText, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import axios, { AxiosError } from "axios";
@@ -30,11 +30,12 @@ const Login: React.FC = () => {
     return (
         <Container
             sx={{
-                "& > :not(style)": { textAlign: "center" },
                 display: "grid",
             }}
         >
-            <h1>Signup Page</h1>
+            <Typography component="h1" variant="h4" textAlign="center">
+                Signup Page
+            </Typography>
             <Box component="form" sx={{ display: "grid", gap: 5 }} onSubmit={handleSubmit}>
                 <TextField id="username" name="username" label="Username" variant="standard" required autoFocus />
                 <TextField id="password" name="password" label="Password" variant="standard" required autoFocus />
