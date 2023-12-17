@@ -50,6 +50,7 @@ func startServer() {
     noAuthRoutes.GET("/posts", controller.GetAllPosts)
     noAuthRoutes.GET("/posts/:category", controller.GetPostByCategory)
     noAuthRoutes.GET("/posts/post/:id", controller.GetPostByID)
+    noAuthRoutes.GET("/posts/post/:id/comments/", controller.GetComments)
 
     authorisedRoutes := router.Group("/api")
     authorisedRoutes.Use(middleware.JWTAuthMiddleware())
@@ -57,7 +58,6 @@ func startServer() {
     authorisedRoutes.POST("/posts/add", controller.AddPost)
     authorisedRoutes.PUT("/posts/post/:id", controller.UpdatePost)
     authorisedRoutes.DELETE("/posts/post/:id", controller.DeletePost)
-    authorisedRoutes.GET("/posts/post/:id/comments/", controller.GetComments)
     authorisedRoutes.POST("/posts/post/:id/comments/add", controller.AddComment)
     authorisedRoutes.PUT("/posts/post/:id/comments/:commentID", controller.UpdateComment)
     authorisedRoutes.DELETE("/posts/post/:id/comments/:commentID", controller.DeleteComment)
