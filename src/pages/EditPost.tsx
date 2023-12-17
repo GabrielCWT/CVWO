@@ -2,6 +2,7 @@ import { CurrentUserContext } from "../App";
 import Error from "../components/Error";
 import { getPostByID } from "../scripts/apiHelpers";
 import PostType from "../types/PostType";
+import { red } from "@mui/material/colors";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import {
     Box,
@@ -14,9 +15,33 @@ import {
     MenuItem,
     FormHelperText,
     SelectChangeEvent,
+    Modal,
+    Typography,
 } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
+
+const deleteButtonStyle = {
+    color: red[400],
+    borderColor: red[500],
+    "&:hover": {
+        color: red[500],
+        backgroundColor: red[100],
+        borderColor: red[400],
+    },
+};
+
+const modalStyle = {
+    position: "absolute" as const,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+};
 
 const categories = ["Technology", "Sports", "Politics", "Entertainment", "Science", "Health", "Gaming"];
 
@@ -24,6 +49,7 @@ const EditPost: React.FC = () => {
     const { currentUser } = useContext(CurrentUserContext);
     const [post, setPost] = React.useState<PostType | null>(null);
     const [hasError, setError] = React.useState<boolean>(false);
+    const [openModal, setOpenModal] = React.useState<boolean>(false);
     const [selectedCategory, setSelectedCategory] = React.useState<string>(categories[0]);
     const [helperMessage, setHelperMessage] = React.useState<string>("");
     const { postID } = useParams();
@@ -62,6 +88,13 @@ const EditPost: React.FC = () => {
         } catch (err) {
             setHelperMessage("Error editing post");
         }
+    };
+
+    const handleDelete = () => {
+        axios.delete(`http://localhost:8000/api/posts/post/${post?.ID}`, {
+            withCredentials: true,
+        });
+        navigate("/");
     };
     if (!currentUser.isSignedIn) {
         return <Navigate to="/login" />;
@@ -115,9 +148,32 @@ const EditPost: React.FC = () => {
                             required
                         />
                         <FormHelperText id="my-helper-text">{helperMessage}</FormHelperText>
-                        <Button type="submit" variant="contained">
-                            Submit
-                        </Button>
+                        <Box sx={{ display: "flex", gap: 3, justifyContent: "flex-end", "& > *": { width: "100px" } }}>
+                            <Button
+                                id="delete-btn"
+                                variant="outlined"
+                                onClick={() => setOpenModal(true)}
+                                sx={deleteButtonStyle}
+                            >
+                                Delete
+                            </Button>
+                            <Button type="submit" variant="contained">
+                                Submit
+                            </Button>
+                        </Box>
+                        <Modal
+                            open={openModal}
+                            onClose={() => setOpenModal(false)}
+                            aria-labelledby="delete-modal-title"
+                        >
+                            <Box sx={modalStyle}>
+                                <Typography id="delete-modal-title" component="h1" variant="h6">
+                                    Are you sure you want to delete this post?
+                                </Typography>
+                                <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+                                <Button onClick={handleDelete}>Delete</Button>
+                            </Box>
+                        </Modal>
                     </>
                 )}
             </Box>
