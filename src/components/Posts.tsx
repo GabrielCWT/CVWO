@@ -1,10 +1,10 @@
 import PostList from "./PostList";
-import PostType from "../types/PostType";
+import PostPreview from "../types/PostPreview";
 import { List, Typography } from "@mui/material";
 import React from "react";
 
 interface Props {
-    data: PostType[];
+    data: PostPreview[];
 }
 
 const Posts: React.FC<Props> = ({ data }) => {

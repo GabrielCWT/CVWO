@@ -2,7 +2,7 @@ import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Posts from "../components/Posts";
 import { getAllPosts, getPostByCategory, getPostByID } from "../scripts/apiHelpers";
-import PostType from "../types/PostType";
+import PostPreview from "../types/PostPreview";
 import { Container, Select, SelectChangeEvent, MenuItem, FormControl, InputLabel } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -23,7 +23,7 @@ const PostsPage: React.FC = () => {
     // TODO backend should hold a list of categories
     // const [categoryOptions, setCategoryOptions] = useState<string[] | null>(null);
     const [hasError, setError] = useState<boolean>(false);
-    const [posts, setPosts] = useState<PostType[] | null>(null);
+    const [posts, setPosts] = useState<PostPreview[] | null>(null);
     useEffect(() => {
         if (postID) {
             getPostByID(postID)

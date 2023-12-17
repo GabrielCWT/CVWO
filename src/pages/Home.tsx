@@ -1,4 +1,4 @@
-import PostType from "../types/PostType";
+import PostPreview from "../types/PostPreview";
 import { getAllPosts } from "../scripts/apiHelpers";
 import Posts from "../components/Posts";
 import Error from "../components/Error";
@@ -8,7 +8,7 @@ import React, { Suspense, useContext, useEffect } from "react";
 import { Container } from "@mui/material";
 
 const Home: React.FC = () => {
-    const [posts, setPosts] = React.useState<PostType[] | null>(null);
+    const [posts, setPosts] = React.useState<PostPreview[] | null>(null);
     const [hasError, setError] = React.useState<boolean>(false);
     useEffect(() => {
         getAllPosts()

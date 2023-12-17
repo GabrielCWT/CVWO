@@ -1,10 +1,10 @@
 import Link from "./Link";
-import PostType from "../types/PostType";
+import PostPreview from "../types/PostPreview";
 import { Divider, Grid, ListItem, Typography } from "@mui/material";
 import React from "react";
 
 interface Props {
-    post: PostType;
+    post: PostPreview;
 }
 
 const PostList: React.FC<Props> = ({ post }) => {
