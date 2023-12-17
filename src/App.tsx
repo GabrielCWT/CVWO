@@ -1,5 +1,4 @@
 import Home from "./pages/Home";
-import StyledThreadView from "./pages/StyledThreadView";
 import CreatePost from "./pages/CreatePost";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
@@ -60,7 +59,6 @@ const App: React.FC = () => {
                                 <Route path="posts/:category/:postID" element={<PostPage />} />
                                 <Route path="posts/:category/:postID/edit" element={<EditPost />} />
                                 <Route path="posts/create" element={<CreatePost />} />
-                                <Route path="test" element={<StyledThreadView />} />
                                 <Route path="signup" element={<Signup />} />
                                 <Route path="login" element={<Login />} />
                                 <Route path="logout" element={<Logout />} />

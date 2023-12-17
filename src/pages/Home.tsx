@@ -1,6 +1,5 @@
 import PostType from "../types/PostType";
 import { getAllPosts } from "../scripts/apiHelpers";
-import BasicThreadList from "../components/BasicThreadList";
 import Posts from "../components/Posts";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
@@ -24,7 +23,6 @@ const Home: React.FC = () => {
                 {"Welcome to CVWO's sample react app! Here's a basic list of forum threads for you to experiment with."}
             </h3>
             <br />
-            <BasicThreadList />
 
             <Suspense fallback={<Loading />}>
                 {hasError ? <Error /> : posts ? <Posts data={posts} /> : <Loading />}
