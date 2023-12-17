@@ -81,3 +81,28 @@ func UpdateComment(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{"data": comment})
 }
+
+func DeleteComment(ctx *gin.Context) {
+	id := ctx.Param("commentID")
+	comment, err := model.GetCommentByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting comment by id"})
+		return
+	}
+	
+	user, err := helper.CurrentUser(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting current user"})
+		return
+	}
+	if comment.UserID != user.ID {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error: No permission to delete comment"})
+		return
+	}
+	err = model.DeleteComment(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error deleting comment"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"data": comment})
+}

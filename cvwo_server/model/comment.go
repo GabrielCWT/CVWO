@@ -48,4 +48,7 @@ func UpdateComment(id string, comment Comment) (*Comment, error) {
 	return updatedComment, nil
 }
 
-
+func DeleteComment(id string) (error) {
+	err := database.Database.Delete(&Comment{}, id).Error
+	return err
+}
