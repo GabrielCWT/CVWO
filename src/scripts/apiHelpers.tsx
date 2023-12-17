@@ -26,3 +26,17 @@ export const getPostByID = async (postID: string) => {
         throw new Error("Error fetching post by ID");
     }
 };
+
+export const getCommentsByPostID = async (postID: string, limit: number, offset: number) => {
+    try {
+        const res = await axios.get(`http://localhost:8000/api/posts/post/${postID}/comment/comments`, {
+            params: {
+                limit,
+                offset,
+            },
+        });
+        return res.data.data;
+    } catch (err) {
+        throw new Error("Error fetching comments by post ID");
+    }
+};
