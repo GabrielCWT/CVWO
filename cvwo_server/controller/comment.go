@@ -32,17 +32,9 @@ func AddComment(ctx *gin.Context) {
 }
 
 func GetComments(ctx *gin.Context) {
-	var input struct {
-		Limit string `form:"limit" json:"limit" binding:"required"`
-		Offset string `form:"offset" json:"offset" binding:"required"`
-	}
-	if err := ctx.ShouldBind(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error binding input"})
-		return
-	}
 	postID := ctx.Param("id")
-	limit, _ := strconv.ParseInt(input.Limit, 10, 64)
-	offset, _ := strconv.ParseInt(input.Offset, 10, 64)
+	limit, _ := strconv.ParseInt(ctx.Query("limit"), 10, 64)
+	offset, _ := strconv.ParseInt(ctx.Query("offset"), 10, 64)
 	comments, err := model.GetComments(int(limit), int(offset), postID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting comments"})
