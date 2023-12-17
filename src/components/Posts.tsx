@@ -1,6 +1,6 @@
 import PostList from "./PostList";
 import PostType from "../types/PostType";
-import { List } from "@mui/material";
+import { List, Typography } from "@mui/material";
 import React from "react";
 
 interface Props {
@@ -8,6 +8,13 @@ interface Props {
 }
 
 const Posts: React.FC<Props> = ({ data }) => {
+    if (data.length === 0) {
+        return (
+            <Typography component="p" variant="h4">
+                Be the first to post!
+            </Typography>
+        );
+    }
     return (
         <List>
             {data.map((post) => (
