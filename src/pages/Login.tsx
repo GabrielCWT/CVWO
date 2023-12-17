@@ -1,5 +1,6 @@
 import { CurrentUserContext } from "../App";
-import { Box, Container, TextField, Button, FormHelperText } from "@mui/material";
+import Link from "../components/Link";
+import { Box, Container, TextField, Button, FormHelperText, Typography } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import axios, { AxiosError } from "axios";
@@ -32,15 +33,19 @@ const Login: React.FC = () => {
     return (
         <Container
             sx={{
-                "& > :not(style)": { textAlign: "center" },
                 display: "grid",
             }}
         >
-            <h1>Login Page</h1>
-            <Box component="form" sx={{ display: "grid", gap: 5 }} onSubmit={handleSubmit}>
-                <TextField id="username" name="username" label="Username" variant="standard" required autoFocus />
-                <TextField id="password" name="password" label="Password" variant="standard" required autoFocus />
+            <Typography component="h1" variant="h4" textAlign="center">
+                Login Page
+            </Typography>
+            <Box component="form" sx={{ display: "grid", gap: 3 }} onSubmit={handleSubmit}>
+                <Box display="grid" gap={2}>
+                    <TextField id="username" name="username" label="Username" variant="standard" required autoFocus />
+                    <TextField id="password" name="password" label="Password" variant="standard" required autoFocus />
+                </Box>
                 <FormHelperText id="my-helper-text">{helperMessage}</FormHelperText>
+                <Link to="/signup">{"Don't have an account? Register here"}</Link>
                 <Button type="submit" variant="contained">
                     Submit
                 </Button>
