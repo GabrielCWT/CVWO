@@ -22,7 +22,7 @@ func (comment *Comment) Save() (*Comment, error) {
 
 func GetComments(limit int, offset int, postID string) ([]Comment, error) {
 	var comments []Comment
-	err := database.Database.Where("post_id = ?", postID).Limit(limit).Offset(offset).Find(&comments).Error
+	err := database.Database.Select("id", "created_at", "content", "username", "user_id", "post_id").Where("post_id = ?", postID).Limit(limit).Offset(offset).Find(&comments).Error
 	if err != nil {
 		return nil, err
 	}
@@ -47,3 +47,5 @@ func UpdateComment(id string, comment Comment) (*Comment, error) {
 	updatedComment := &updatedComments[0]
 	return updatedComment, nil
 }
+
+
