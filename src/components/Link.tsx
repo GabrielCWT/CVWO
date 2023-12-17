@@ -11,7 +11,7 @@ interface Props {
 
 const Link: React.FC<Props> = ({ to, children, sx }) => {
     return (
-        <MUILink component={RouterLink} to={to} sx={sx}>
+        <MUILink component={RouterLink} to={to} sx={sx} underline="none">
             {children}
         </MUILink>
     );
