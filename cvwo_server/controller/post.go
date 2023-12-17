@@ -92,3 +92,28 @@ func UpdatePost(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{"data": post})
 }
+
+func DeletePost(ctx *gin.Context) {
+	id := ctx.Param("id")
+	post, err := model.GetPostByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting post by id"})
+		return
+	}
+	
+	user, err := helper.CurrentUser(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting current user"})
+		return
+	}
+	if post.UserID != user.ID {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error: No permission to delete post"})
+		return
+	}
+	err = model.DeletePost(id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error deleting post"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"data": post})
+}

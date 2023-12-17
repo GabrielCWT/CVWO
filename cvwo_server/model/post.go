@@ -57,3 +57,8 @@ func UpdatePost(id string, post Post) (*Post, error) {
 	updatedPost := &updatedPosts[0]
 	return updatedPost, nil
 }
+
+func DeletePost(id string) (error) {
+	err := database.Database.Delete(&Post{}, id).Error
+	return err
+}

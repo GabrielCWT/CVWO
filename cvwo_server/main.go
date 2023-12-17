@@ -55,7 +55,7 @@ func startServer() {
     authorisedRoutes.GET("/test", controller.Test)
     authorisedRoutes.POST("/posts/add", controller.AddPost)
     authorisedRoutes.PUT("/posts/post/:id", controller.UpdatePost)
-    // TODO authorisedRoutes.DELETE("/posts/:id", controller.DeletePost)
+    authorisedRoutes.DELETE("/posts/post/:id", controller.DeletePost)
     router.Run(":8000")
     fmt.Println("Server running on port 8000")
 }
