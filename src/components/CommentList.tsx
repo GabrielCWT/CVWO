@@ -10,10 +10,10 @@ type Props = {
 
 const CommentList: React.FC<Props> = ({ commentList }) => {
     return (
-        <Box id="comment-container" display="grid">
+        <Box id="comment-list-container" display="grid">
             {commentList.length === 0 ? (
-                <Typography component="p" variant="h4">
-                    Be the first to post!
+                <Typography component="p" variant="body1">
+                    Be the first to comment!
                 </Typography>
             ) : (
                 <List>
