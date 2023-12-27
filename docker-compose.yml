@@ -22,13 +22,9 @@ services:
             - JWT_SECRET=$JWT_SECRET
         ports:
             - $BACKEND_PORT:$BACKEND_PORT
-        # command: ["go", "run", "main"]
-
-    # frontend:
-    #     build: .
-    #     ports:
-    #         - "3000:3000"
-    #     command: ["yarn", "run", "dev"]
-    #     volumes:
-    #         - .:/app
-    #         - /app/node_modules
+    frontend:
+        build: .
+        environment:
+            - PORT=$FRONTEND_PORT
+        ports:
+            - $FRONTEND_PORT:$FRONTEND_PORT
