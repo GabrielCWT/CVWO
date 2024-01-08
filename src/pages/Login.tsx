@@ -42,7 +42,7 @@ const Login: React.FC = () => {
             <Box component="form" sx={{ display: "grid", gap: 3 }} onSubmit={handleSubmit}>
                 <Box display="grid" gap={2}>
                     <TextField id="username" name="username" label="Username" variant="standard" required autoFocus />
-                    <TextField id="password" name="password" label="Password" variant="standard" required autoFocus />
+                    <TextField id="password" name="password" label="Password" variant="standard" required />
                 </Box>
                 <FormHelperText id="my-helper-text">{helperMessage}</FormHelperText>
                 <Link to="/signup">{"Don't have an account? Register here"}</Link>
