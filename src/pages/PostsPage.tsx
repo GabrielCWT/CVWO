@@ -1,7 +1,7 @@
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Posts from "../components/Posts";
-import { getAllPosts, getPostByCategory, getPostByID } from "../scripts/apiHelpers";
+import { getAllPosts, getPostByCategory } from "../scripts/apiHelpers";
 import PostPreview from "../types/PostPreview";
 import { Container, Select, SelectChangeEvent, MenuItem, FormControl, InputLabel } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
@@ -25,13 +25,7 @@ const PostsPage: React.FC = () => {
     const [hasError, setError] = useState<boolean>(false);
     const [posts, setPosts] = useState<PostPreview[] | null>(null);
     useEffect(() => {
-        if (postID) {
-            getPostByID(postID)
-                .then((posts) => setPosts(posts))
-                .catch(() => {
-                    setError(true);
-                });
-        } else if (category) {
+        if (category) {
             getPostByCategory(category)
                 .then((posts) => setPosts(posts))
                 .catch(() => {
