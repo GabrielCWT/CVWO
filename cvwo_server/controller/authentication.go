@@ -23,7 +23,7 @@ func SignUp(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error saving user"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": savedUser})
+	ctx.JSON(http.StatusOK, savedUser)
 }
 
 
@@ -59,13 +59,13 @@ func Login(ctx *gin.Context) {
 
 	ctx.SetSameSite(http.SameSiteStrictMode)
 	ctx.SetCookie("Authorisation", jwtTokenString, 60*60*24*30, "", "", false, true)
-	ctx.JSON(http.StatusOK, gin.H{"data": user, "token": jwtTokenString})
+	ctx.JSON(http.StatusOK,  gin.H{"user": user, "token": jwtTokenString})
 }
 
 func Logout(ctx *gin.Context) {
 	ctx.SetSameSite(http.SameSiteStrictMode)
 	ctx.SetCookie("Authorisation", "", -1, "", "", false, true)
-	ctx.JSON(http.StatusOK, gin.H{"data": "Logged out"})
+	ctx.JSON(http.StatusOK, gin.H{"message": "Logged out"})
 }
 
 func Verify(ctx *gin.Context) {
@@ -74,5 +74,5 @@ func Verify(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error verifying user"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": user})
+	ctx.JSON(http.StatusOK, user)
 }

@@ -31,8 +31,8 @@ const CreatePost: React.FC = () => {
         const data = new FormData(e.currentTarget);
         try {
             const res = await axios.post("http://localhost:8000/api/posts/add", data, { withCredentials: true });
-            const category = res.data.data.Category;
-            const postID = res.data.data.ID;
+            const category = res.data.Category;
+            const postID = res.data.ID;
             navigate(`/posts/${category}/${postID}`);
         } catch (err) {
             setHelperMessage("Error creating post");

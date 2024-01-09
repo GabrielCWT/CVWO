@@ -28,7 +28,7 @@ func AddComment(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error saving comment"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": comment})
+	ctx.JSON(http.StatusOK, comment)
 }
 
 func GetComments(ctx *gin.Context) {
@@ -40,7 +40,7 @@ func GetComments(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting comments"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": comments})
+	ctx.JSON(http.StatusOK, comments)
 }
 
 func UpdateComment(ctx *gin.Context) {
@@ -71,7 +71,7 @@ func UpdateComment(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error saving comment"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": comment})
+	ctx.JSON(http.StatusOK, comment)
 }
 
 func DeleteComment(ctx *gin.Context) {
@@ -96,5 +96,5 @@ func DeleteComment(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error deleting comment"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": comment})
+	ctx.JSON(http.StatusOK, comment)
 }

@@ -82,8 +82,8 @@ const EditPost: React.FC = () => {
             const res = await axios.put(`http://localhost:8000/api/posts/post/${post?.ID}`, data, {
                 withCredentials: true,
             });
-            const category = res.data.data.Category;
-            const postID = res.data.data.ID;
+            const category = res.data.Category;
+            const postID = res.data.ID;
             navigate(`/posts/${category}/${postID}`);
         } catch (err) {
             setHelperMessage("Error editing post");

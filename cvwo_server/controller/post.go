@@ -8,7 +8,7 @@ import (
 )
 
 func Test(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, gin.H{"data": "Successfully authenticated"})
+	ctx.JSON(http.StatusOK, gin.H{"message": "Successfully authenticated"})
 }
 
 func AddPost(ctx *gin.Context) {
@@ -30,7 +30,7 @@ func AddPost(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error saving post"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": post})
+	ctx.JSON(http.StatusOK, post)
 }
 
 func GetAllPosts(ctx *gin.Context) {
@@ -39,7 +39,7 @@ func GetAllPosts(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting all posts"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": posts})
+	ctx.JSON(http.StatusOK, posts)
 }
 
 func GetPostByCategory(ctx *gin.Context) {
@@ -49,7 +49,7 @@ func GetPostByCategory(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting posts by category"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": posts})
+	ctx.JSON(http.StatusOK, posts)
 }
 
 func GetPostByID(ctx *gin.Context) {
@@ -59,7 +59,7 @@ func GetPostByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error getting post by id"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": post})
+	ctx.JSON(http.StatusOK, post)
 }
 
 func UpdatePost(ctx *gin.Context) {
@@ -90,7 +90,7 @@ func UpdatePost(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error saving post"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": post})
+	ctx.JSON(http.StatusOK, post)
 }
 
 func DeletePost(ctx *gin.Context) {
@@ -115,5 +115,5 @@ func DeletePost(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Error deleting post"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": post})
+	ctx.JSON(http.StatusOK, post)
 }

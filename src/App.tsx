@@ -43,7 +43,7 @@ const App: React.FC = () => {
         axios
             .get("http://localhost:8000/auth/verify", { withCredentials: true })
             .then((res) => {
-                setCurrentUser({ isSignedIn: true, username: res.data.data.username });
+                setCurrentUser({ isSignedIn: true, username: res.data.username });
             })
             .catch(() => {});
     }, []);
