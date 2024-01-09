@@ -1,4 +1,5 @@
-import PostList from "./PostList";
+// import PostList from "./PostList";
+import PostCard from "./PostCard";
 import PostPreview from "../types/PostPreview";
 import { List, Typography } from "@mui/material";
 import React from "react";
@@ -18,7 +19,8 @@ const Posts: React.FC<Props> = ({ data }) => {
     return (
         <List>
             {data.map((post) => (
-                <PostList post={post} key={post.ID} />
+                // <PostList post={post} key={post.ID} />
+                <PostCard post={post} key={post.ID} />
             ))}
         </List>
     );
