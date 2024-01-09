@@ -2,6 +2,7 @@ import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Post from "../components/Post";
 import { getCommentsByPostID, getPostByID } from "../scripts/apiHelpers";
+import { formatRelativeTime } from "../scripts/helperFunctions";
 
 import Comments from "../components/Comments";
 import PostType from "../types/PostType";
@@ -23,12 +24,17 @@ const PostPage: React.FC = () => {
         setIsAuthorised(true);
         if (postID) {
             getPostByID(postID)
-                .then((posts) => setPost(posts))
+                .then((post) => setPost(post))
                 .catch(() => {
                     setError(true);
                 });
             getCommentsByPostID(postID, limit, offset)
-                .then((commentList) => setCommentList(commentList))
+                .then((commentList) => {
+                    for (let i = 0; i < commentList.length; i++) {
+                        commentList[i].CreatedAt = formatRelativeTime(new Date(commentList[i].CreatedAt));
+                    }
+                    setCommentList(commentList);
+                })
                 .catch(() => {
                     setError(true);
                 });
