@@ -12,7 +12,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const PostPage: React.FC = () => {
-    const { postID } = useParams();
+    const { postID } = useParams() as { postID: string };
     const [hasError, setError] = useState<boolean>(false);
     const [isAuthorised, setIsAuthorised] = useState<boolean>(false); // TODO: check if user has permission to edit post
     const [post, setPost] = useState<PostType | null>(null);
@@ -51,7 +51,7 @@ const PostPage: React.FC = () => {
                 ) : post && commentList ? (
                     <>
                         <Post data={post} isAuthorised={isAuthorised} />
-                        <Comments commentList={commentList} postID={post.ID} />
+                        <Comments commentList={commentList} postID={postID} />
                     </>
                 ) : (
                     <Loading />

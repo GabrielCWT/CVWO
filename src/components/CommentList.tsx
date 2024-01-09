@@ -6,9 +6,10 @@ import React from "react";
 
 type Props = {
     commentList: CommentType[];
+    postID: string;
 };
 
-const CommentList: React.FC<Props> = ({ commentList }) => {
+const CommentList: React.FC<Props> = ({ commentList, postID }) => {
     return (
         <Box id="comment-list-container" display="grid">
             {commentList.length === 0 ? (
@@ -18,7 +19,7 @@ const CommentList: React.FC<Props> = ({ commentList }) => {
             ) : (
                 <List>
                     {commentList.map((comment) => (
-                        <CommentItem comment={comment} key={comment.ID} />
+                        <CommentItem comment={comment} key={comment.ID} postID={postID} />
                     ))}
                 </List>
             )}

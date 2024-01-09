@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
     commentList: CommentType[];
-    postID: number;
+    postID: string;
 };
 
 const Comments: React.FC<Props> = ({ commentList, postID }) => {
@@ -35,7 +35,7 @@ const Comments: React.FC<Props> = ({ commentList, postID }) => {
                     Submit
                 </Button>
             </Box>
-            <CommentList commentList={commentList} />
+            <CommentList commentList={commentList} postID={postID} />
         </Box>
     );
 };
