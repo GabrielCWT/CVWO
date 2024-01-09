@@ -5,7 +5,7 @@ import { SxProps, Theme } from "@mui/material/styles";
 
 interface Props {
     to: string;
-    children: string;
+    children: React.ReactNode;
     sx?: SxProps<Theme>;
 }
 
