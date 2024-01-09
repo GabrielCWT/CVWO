@@ -1,5 +1,5 @@
 import CommentType from "../types/CommentType";
-import { ListItem, Typography } from "@mui/material";
+import { Card, CardContent, Typography, Divider } from "@mui/material";
 
 import React from "react";
 
@@ -9,14 +9,15 @@ type Props = {
 
 const CommentItem: React.FC<Props> = ({ comment }) => {
     return (
-        <ListItem>
-            <Typography variant="body1" component="p">
-                {comment.Content}
-            </Typography>
-            <Typography variant="subtitle2" component="span">
-                Written By: {comment.Username}
-            </Typography>
-        </ListItem>
+        <>
+            <Card square elevation={0} sx={{ paddingTop: 2 }}>
+                <Typography sx={{ fontWeight: 600, fontSize: "0.8rem" }}>
+                    {comment.Username} • {comment.CreatedAt}
+                </Typography>
+                <CardContent sx={{ padding: 0 }}>{comment.Content}</CardContent>
+            </Card>
+            <Divider />
+        </>
     );
 };
 
