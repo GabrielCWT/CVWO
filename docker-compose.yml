@@ -1,6 +1,7 @@
 version: "3"
 services:
     db:
+        container_name: db
         image: postgres:13.1
         environment:
             - POSTGRES_USER=$DB_USER
@@ -9,6 +10,7 @@ services:
             - $DB_PORT:$DB_PORT
         command: -p $DB_PORT
     backend:
+        container_name: backend
         depends_on:
             - db
         build: ./cvwo_server
@@ -23,6 +25,7 @@ services:
         ports:
             - $BACKEND_PORT:$BACKEND_PORT
     frontend:
+        container_name: frontend
         build: .
         environment:
             - PORT=$FRONTEND_PORT
