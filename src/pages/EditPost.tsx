@@ -52,24 +52,22 @@ const EditPost: React.FC = () => {
     const [openModal, setOpenModal] = React.useState<boolean>(false);
     const [selectedCategory, setSelectedCategory] = React.useState<string>(categories[0]);
     const [helperMessage, setHelperMessage] = React.useState<string>("");
-    const { postID } = useParams();
+    const { postID } = useParams() as { postID: string };
     const navigate = useNavigate();
 
     useEffect(() => {
-        // TODO: check if user has permission to edit post
-        const isAuthorised = true;
-        if (isAuthorised && postID) {
-            getPostByID(postID)
-                .then((post) => {
+        getPostByID(postID)
+            .then((post) => {
+                if (post.Username !== currentUser.username) {
+                    navigate("/");
+                } else {
                     setPost(post);
                     setSelectedCategory(post.Category);
-                })
-                .catch(() => {
-                    setError(true);
-                });
-        } else {
-            navigate("/");
-        }
+                }
+            })
+            .catch(() => {
+                setError(true);
+            });
     }, []);
 
     const handleChange = (e: SelectChangeEvent) => {

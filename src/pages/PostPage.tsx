@@ -7,24 +7,29 @@ import { formatRelativeTime } from "../scripts/helperFunctions";
 import Comments from "../components/Comments";
 import PostType from "../types/PostType";
 import CommentType from "../types/CommentType";
+import { CurrentUserContext } from "../App";
 import { Container } from "@mui/material";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const PostPage: React.FC = () => {
+    const { currentUser } = useContext(CurrentUserContext);
     const { postID } = useParams() as { postID: string };
     const [hasError, setError] = useState<boolean>(false);
-    const [isAuthorised, setIsAuthorised] = useState<boolean>(false); // TODO: check if user has permission to edit post
+    const [isAuthorised, setIsAuthorised] = useState<boolean>(false);
     const [post, setPost] = useState<PostType | null>(null);
     const [commentList, setCommentList] = useState<CommentType[] | null>(null);
     const [limit] = useState<number>(10);
     const [offset] = useState<number>(0); // TODO implement pagination
     useEffect(() => {
-        // TODO: check if user has permission to edit post
-        setIsAuthorised(true);
         if (postID) {
             getPostByID(postID)
-                .then((post) => setPost(post))
+                .then((post) => {
+                    setPost(post);
+                    if (post.Username == currentUser.username) {
+                        setIsAuthorised(true);
+                    }
+                })
                 .catch(() => {
                     setError(true);
                 });
