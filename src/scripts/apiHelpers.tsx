@@ -42,3 +42,13 @@ export const getCommentsByPostID = async (postID: string, limit: number, offset:
         throw new Error("Error fetching comments by post ID");
     }
 };
+
+export const deleteCommentByID = async (postID: string, commentID: number): Promise<void> => {
+    try {
+        await axios.delete(`http://localhost:8000/api/posts/post/${postID}/comment/comments/${commentID}`, {
+            withCredentials: true,
+        });
+    } catch (err) {
+        throw new Error("Error deleting comment by ID");
+    }
+};
