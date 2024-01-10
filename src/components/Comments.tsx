@@ -1,7 +1,7 @@
 import CommentList from "./CommentList";
 import CommentType from "../types/CommentType";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import React from "react";
+import { Alert, Box, Button, Snackbar, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ type Props = {
 
 const Comments: React.FC<Props> = ({ commentList, postID }) => {
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
@@ -21,11 +22,14 @@ const Comments: React.FC<Props> = ({ commentList, postID }) => {
             });
             navigate(0);
         } catch (err) {
-            // TODO handle error
+            setOpen(true);
         }
     };
     return (
         <Box id="comment-container" display="grid">
+            <Snackbar open={open} autoHideDuration={4000} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
+                <Alert severity="error">Error posting comment, Try again later.</Alert>
+            </Snackbar>
             <Typography component="h2" variant="h6">
                 Comments
             </Typography>
