@@ -26,12 +26,20 @@ const Comments: React.FC<Props> = ({ commentList, postID }) => {
     };
     return (
         <Box id="comment-container" display="grid">
-            <Typography component="h2" variant="h5">
+            <Typography component="h2" variant="h6">
                 Comments
             </Typography>
-            <Box component="form" sx={{ display: "grid", gap: "4px" }} onSubmit={handleSubmit}>
-                <TextField id="comment-content" name="content" label="Comment" variant="standard" multiline required />
-                <Button type="submit" variant="contained" sx={{ width: "100px", justifySelf: "flex-end" }}>
+            <Box component="form" sx={{ display: "flex", gap: "4px", alignItems: "end" }} onSubmit={handleSubmit}>
+                <TextField
+                    id="comment-content"
+                    name="content"
+                    label="Add a comment"
+                    variant="standard"
+                    multiline
+                    required
+                    sx={{ flexGrow: 1 }}
+                />
+                <Button type="submit" variant="contained" sx={{ height: 40 }}>
                     Submit
                 </Button>
             </Box>
