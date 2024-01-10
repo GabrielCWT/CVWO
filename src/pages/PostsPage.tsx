@@ -1,38 +1,36 @@
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 import Posts from "../components/Posts";
-import { getAllPosts, getPostByCategory } from "../scripts/apiHelpers";
+import { getAllPosts, getCategories, getPostByCategory } from "../scripts/apiHelpers";
 import PostPreview from "../types/PostPreview";
 import { Container, Select, SelectChangeEvent, MenuItem, FormControl, InputLabel } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const categoryOptions = [
-    "All Posts",
-    "Technology",
-    "Sports",
-    "Politics",
-    "Entertainment",
-    "Science",
-    "Health",
-    "Gaming",
-];
 const PostsPage: React.FC = () => {
     const { category, postID } = useParams();
     const navigate = useNavigate();
-    // TODO backend should hold a list of categories
-    // const [categoryOptions, setCategoryOptions] = useState<string[] | null>(null);
+    const [categoryOptions, setCategoryOptions] = useState<string[]>(["All Posts"]);
     const [hasError, setError] = useState<boolean>(false);
     const [posts, setPosts] = useState<PostPreview[] | null>(null);
     useEffect(() => {
-        if (category) {
-            getPostByCategory(category)
+        getCategories()
+            .then((categories) => setCategoryOptions([...categoryOptions, ...categories]))
+            .catch(() => {
+                setError(true);
+            });
+    }, []);
+    useEffect(() => {
+        if (!category) {
+            getAllPosts()
                 .then((posts) => setPosts(posts))
                 .catch(() => {
                     setError(true);
                 });
+        } else if (!categoryOptions.includes(category)) {
+            navigate("/posts");
         } else {
-            getAllPosts()
+            getPostByCategory(category)
                 .then((posts) => setPosts(posts))
                 .catch(() => {
                     setError(true);
@@ -53,7 +51,11 @@ const PostsPage: React.FC = () => {
             <Suspense fallback={<Loading />}>
                 <FormControl>
                     <InputLabel id="category-select-label">Category</InputLabel>
-                    <Select label="Category" defaultValue={category ? category : "All Posts"} onChange={handleNavigate}>
+                    <Select
+                        label="Category"
+                        defaultValue={category && categoryOptions.includes(category) ? category : "All Posts"}
+                        onChange={handleNavigate}
+                    >
                         {categoryOptions.map((category) => (
                             <MenuItem key={category} value={category}>
                                 {category}

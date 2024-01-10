@@ -51,6 +51,7 @@ func startServer() {
     noAuthRoutes.GET("/posts", controller.GetAllPosts)
     noAuthRoutes.GET("/posts/:category", controller.GetPostByCategory)
     noAuthRoutes.GET("/posts/post/:id", controller.GetPostByID)
+    noAuthRoutes.GET("/posts/categories", controller.GetCategories)
     noAuthRoutes.GET("/posts/post/:id/comment/comments", controller.GetComments)
 
     authorisedRoutes := router.Group("/api")

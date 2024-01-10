@@ -1,4 +1,6 @@
 import { CurrentUserContext } from "../App";
+import Error from "../components/Error";
+import { getCategories } from "../scripts/apiHelpers";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
     Box,
@@ -12,16 +14,23 @@ import {
     FormHelperText,
     SelectChangeEvent,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-
-const categories = ["Technology", "Sports", "Politics", "Entertainment", "Science", "Health", "Gaming"];
 
 const CreatePost: React.FC = () => {
     const { currentUser } = useContext(CurrentUserContext);
-    const [selectedCategory, setSelectedCategory] = React.useState<string>(categories[0]);
-    const [helperMessage, setHelperMessage] = React.useState<string>("");
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [categoryOptions, setCategoryOptions] = useState<string[] | null>(null);
+    const [helperMessage, setHelperMessage] = useState<string>("");
+    const [hasError, setError] = useState<boolean>(false);
     const navigate = useNavigate();
+    useEffect(() => {
+        getCategories()
+            .then((categories) => setCategoryOptions(categories))
+            .catch(() => {
+                setError(true);
+            });
+    }, []);
 
     const handleChange = (e: SelectChangeEvent) => {
         setSelectedCategory(e.target.value as string);
@@ -41,6 +50,10 @@ const CreatePost: React.FC = () => {
     if (!currentUser.isSignedIn) {
         return <Navigate to="/login" />;
     }
+
+    if (categoryOptions === null || hasError) {
+        return <Error />;
+    }
     return (
         <Container>
             <h1>{"Create Post"}</h1>
@@ -56,7 +69,7 @@ const CreatePost: React.FC = () => {
                         value={selectedCategory}
                         onChange={handleChange}
                     >
-                        {categories.map((category) => (
+                        {categoryOptions.map((category) => (
                             <MenuItem key={category} value={category}>
                                 {category}
                             </MenuItem>

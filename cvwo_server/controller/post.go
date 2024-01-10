@@ -62,6 +62,10 @@ func GetPostByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, post)
 }
 
+func GetCategories(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, model.Categories)
+}
+
 func UpdatePost(ctx *gin.Context) {
 	id := ctx.Param("id")
 	post, err := model.GetPostByID(id)

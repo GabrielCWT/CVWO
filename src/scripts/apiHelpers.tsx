@@ -43,6 +43,15 @@ export const getCommentsByPostID = async (postID: string, limit: number, offset:
     }
 };
 
+export const getCategories = async (): Promise<string[]> => {
+    try {
+        const res = await axios.get("http://localhost:8000/api/posts/categories");
+        return res.data;
+    } catch (err) {
+        throw new Error("Error fetching categories");
+    }
+};
+
 export const deleteCommentByID = async (postID: string, commentID: number): Promise<void> => {
     try {
         await axios.delete(`http://localhost:8000/api/posts/post/${postID}/comment/comments/${commentID}`, {

@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm/clause"
 	"cvwo_server/database"
 )
+
 type Post struct {
 	gorm.Model
 	Title string `gorm:"not null;type:text" form:"title"`
@@ -11,6 +12,16 @@ type Post struct {
 	Category string `gorm:"not null;type:text" form:"category"`
 	Username string
 	UserID uint
+}
+
+var Categories = []string{
+	"Technology",
+	"Sports",
+	"Politics",
+	"Entertainment",
+	"Science",
+	"Health",
+	"Gaming",
 }
 
 func (post *Post) Save() (*Post, error) {
