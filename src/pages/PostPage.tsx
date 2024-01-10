@@ -8,10 +8,10 @@ import Comments from "../components/Comments";
 import PostType from "../types/PostType";
 import CommentType from "../types/CommentType";
 import { CurrentUserContext } from "../App";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React, { Suspense, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 const PostPage: React.FC = () => {
     const { currentUser } = useContext(CurrentUserContext);
     const { postID } = useParams() as { postID: string };
@@ -19,8 +19,9 @@ const PostPage: React.FC = () => {
     const [isAuthorised, setIsAuthorised] = useState<boolean>(false);
     const [post, setPost] = useState<PostType | null>(null);
     const [commentList, setCommentList] = useState<CommentType[] | null>(null);
-    const [limit] = useState<number>(10);
-    const [offset] = useState<number>(0); // TODO implement pagination
+    const [limit] = useState<number>(20);
+    const [offset, setOffset] = useState<number>(0);
+    const [hasMore, setHasMore] = useState<boolean>(true);
     useEffect(() => {
         if (postID) {
             getPostByID(postID)
@@ -47,7 +48,24 @@ const PostPage: React.FC = () => {
             setError(true);
         }
     }, [postID]);
-
+    const loadMoreComments = () => {
+        const newOffset = offset + limit;
+        getCommentsByPostID(postID, limit, newOffset)
+            .then((newComments) => {
+                setOffset(newOffset);
+                if (newComments.length == 0) {
+                    setHasMore(false);
+                    return;
+                }
+                for (let i = 0; i < newComments.length; i++) {
+                    newComments[i].CreatedAt = formatRelativeTime(new Date(newComments[i].CreatedAt));
+                }
+                if (commentList) {
+                    setCommentList([...commentList, ...newComments]);
+                } else setCommentList(newComments);
+            })
+            .catch(() => {});
+    };
     return (
         <Container sx={{ display: "grid", gap: 6 }}>
             <Suspense fallback={<Loading />}>
@@ -55,8 +73,17 @@ const PostPage: React.FC = () => {
                     <Error />
                 ) : post && commentList ? (
                     <>
-                        <Post data={post} isAuthorised={isAuthorised} />
-                        <Comments commentList={commentList} postID={postID} />
+                        <InfiniteScroll
+                            dataLength={commentList.length}
+                            next={loadMoreComments}
+                            hasMore={hasMore}
+                            loader={<Loading />}
+                            endMessage={<Typography>{`Yay! You've read everything!`}</Typography>}
+                            style={{ overflow: "hidden" }}
+                        >
+                            <Post data={post} isAuthorised={isAuthorised} />
+                            <Comments commentList={commentList} postID={postID} />
+                        </InfiniteScroll>
                     </>
                 ) : (
                     <Loading />
