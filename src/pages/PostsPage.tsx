@@ -3,6 +3,7 @@ import Error from "../components/Error";
 import Posts from "../components/Posts";
 import { getAllPosts, getCategories, getPostByCategory } from "../scripts/apiHelpers";
 import PostPreview from "../types/PostPreview";
+import ScrollToTop from "../components/ScrollToTop";
 import { Container, Select, SelectChangeEvent, MenuItem, FormControl, InputLabel } from "@mui/material";
 import React, { Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -38,7 +39,7 @@ const PostsPage: React.FC = () => {
         }
     }, [category, postID]);
 
-    const handleNavigate = (e: SelectChangeEvent) => {
+    const handleNavigate = (e: SelectChangeEvent): void => {
         const value = e.target.value;
         if (value === "All Posts") {
             navigate("/posts");
@@ -64,6 +65,7 @@ const PostsPage: React.FC = () => {
                     </Select>
                 </FormControl>
                 {hasError ? <Error /> : posts ? <Posts data={posts} /> : <Loading />}
+                <ScrollToTop />
             </Suspense>
         </Container>
     );

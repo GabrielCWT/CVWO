@@ -3,11 +3,11 @@ import Error from "../components/Error";
 import Post from "../components/Post";
 import { getCommentsByPostID, getPostByID } from "../scripts/apiHelpers";
 import { formatRelativeTime } from "../scripts/helperFunctions";
-
 import Comments from "../components/Comments";
 import PostType from "../types/PostType";
 import CommentType from "../types/CommentType";
 import { CurrentUserContext } from "../App";
+import ScrollToTop from "../components/ScrollToTop";
 import { Container, Typography } from "@mui/material";
 import React, { Suspense, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -84,6 +84,7 @@ const PostPage: React.FC = () => {
                             <Post data={post} isAuthorised={isAuthorised} />
                             <Comments commentList={commentList} postID={postID} />
                         </InfiniteScroll>
+                        <ScrollToTop />
                     </>
                 ) : (
                     <Loading />
