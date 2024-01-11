@@ -17,9 +17,13 @@ const Comments: React.FC<Props> = ({ commentList, postID }) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         try {
-            await axios.post(`http://localhost:8000/api/posts/post/${postID}/comment/comments/add`, data, {
-                withCredentials: true,
-            });
+            await axios.post(
+                `${process.env.REACT_APP_BACKEND_URL}/api/posts/post/${postID}/comment/comments/add`,
+                data,
+                {
+                    withCredentials: true,
+                },
+            );
             navigate(0);
         } catch (err) {
             setOpen(true);

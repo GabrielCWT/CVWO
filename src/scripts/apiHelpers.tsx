@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const getAllPosts = async (): Promise<PostType[]> => {
     try {
-        const res = await axios.get("http://localhost:8000/api/posts");
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/posts`);
         return res.data;
     } catch (err) {
         throw new Error("Error fetching posts");
@@ -13,7 +13,7 @@ export const getAllPosts = async (): Promise<PostType[]> => {
 
 export const getPostByCategory = async (category: string): Promise<PostType[]> => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/posts/${category}`);
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/posts/${category}`);
         return res.data;
     } catch (err) {
         throw new Error("Error fetching posts by category");
@@ -22,7 +22,7 @@ export const getPostByCategory = async (category: string): Promise<PostType[]> =
 
 export const getPostByID = async (postID: string): Promise<PostType> => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/posts/post/${postID}`);
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/posts/post/${postID}`);
         return res.data;
     } catch (err) {
         throw new Error("Error fetching post by ID");
@@ -31,7 +31,7 @@ export const getPostByID = async (postID: string): Promise<PostType> => {
 
 export const getCommentsByPostID = async (postID: string, limit: number, offset: number): Promise<CommentType[]> => {
     try {
-        const res = await axios.get(`http://localhost:8000/api/posts/post/${postID}/comment/comments`, {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/posts/post/${postID}/comment/comments`, {
             params: {
                 limit,
                 offset,
@@ -45,7 +45,7 @@ export const getCommentsByPostID = async (postID: string, limit: number, offset:
 
 export const getCategories = async (): Promise<string[]> => {
     try {
-        const res = await axios.get("http://localhost:8000/api/posts/categories");
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/posts/categories`);
         return res.data;
     } catch (err) {
         throw new Error("Error fetching categories");
@@ -54,9 +54,12 @@ export const getCategories = async (): Promise<string[]> => {
 
 export const deleteCommentByID = async (postID: string, commentID: number): Promise<void> => {
     try {
-        await axios.delete(`http://localhost:8000/api/posts/post/${postID}/comment/comments/${commentID}`, {
-            withCredentials: true,
-        });
+        await axios.delete(
+            `${process.env.REACT_APP_BACKEND_URL}/api/posts/post/${postID}/comment/comments/${commentID}`,
+            {
+                withCredentials: true,
+            },
+        );
     } catch (err) {
         throw new Error("Error deleting comment by ID");
     }

@@ -41,7 +41,7 @@ const App: React.FC = () => {
     useEffect(() => {
         console.log("checking auth");
         axios
-            .get("http://localhost:8000/auth/verify", { withCredentials: true })
+            .get(`${process.env.REACT_APP_BACKEND_URL}/auth/verify`, { withCredentials: true })
             .then((res) => {
                 setCurrentUser({ isSignedIn: true, username: res.data.username });
             })

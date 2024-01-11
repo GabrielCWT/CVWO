@@ -77,7 +77,7 @@ const EditPost: React.FC = () => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         try {
-            const res = await axios.put(`http://localhost:8000/api/posts/post/${post?.ID}`, data, {
+            const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/posts/post/${post?.ID}`, data, {
                 withCredentials: true,
             });
             const category = res.data.Category;
@@ -89,7 +89,7 @@ const EditPost: React.FC = () => {
     };
 
     const handleDelete = () => {
-        axios.delete(`http://localhost:8000/api/posts/post/${post?.ID}`, {
+        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/posts/post/${post?.ID}`, {
             withCredentials: true,
         });
         navigate("/");

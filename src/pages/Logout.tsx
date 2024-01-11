@@ -7,7 +7,7 @@ import axios from "axios";
 const Logout: React.FC = () => {
     const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     const handleLogout = () => {
-        axios.post("http://localhost:8000/auth/logout", {}, { withCredentials: true }).then(() => {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/logout`, {}, { withCredentials: true }).then(() => {
             setCurrentUser({ isSignedIn: false, username: "" });
         });
     };

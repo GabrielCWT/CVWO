@@ -11,7 +11,7 @@ const Login: React.FC = () => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         try {
-            const res = await axios.post("http://localhost:8000/auth/signup", data);
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`, data);
             console.log(res);
             setCurrentUser({ isSignedIn: true, username: data.get("username") as string });
         } catch (err) {
