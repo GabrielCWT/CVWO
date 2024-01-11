@@ -39,7 +39,6 @@ export const CurrentUserContext = createContext<CurrentUserContextType>({
 const App: React.FC = () => {
     const [currentUser, setCurrentUser] = useState<CurrentUser>({ isSignedIn: false, username: "" });
     useEffect(() => {
-        console.log("checking auth");
         axios
             .get(`${process.env.REACT_APP_BACKEND_URL}/auth/verify`, { withCredentials: true })
             .then((res) => {

@@ -47,7 +47,6 @@ func startServer() {
     routes.GET("/verify", controller.Verify)
     routes.POST("/logout", controller.Logout)
 
-    // TODO clean up comment route
     noAuthRoutes := router.Group("/api")
     noAuthRoutes.GET("/posts", controller.GetAllPosts)
     noAuthRoutes.GET("/posts/:category", controller.GetPostByCategory)
