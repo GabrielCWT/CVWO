@@ -57,13 +57,13 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.SetSameSite(http.SameSiteStrictMode)
+	ctx.SetSameSite(http.SameSiteNoneMode)
 	ctx.SetCookie("Authorisation", jwtTokenString, 60*60*24*30, "", "", false, true)
 	ctx.JSON(http.StatusOK,  gin.H{"user": user, "token": jwtTokenString})
 }
 
 func Logout(ctx *gin.Context) {
-	ctx.SetSameSite(http.SameSiteStrictMode)
+	ctx.SetSameSite(http.SameSiteNoneMode)
 	ctx.SetCookie("Authorisation", "", -1, "", "", false, true)
 	ctx.JSON(http.StatusOK, gin.H{"message": "Logged out"})
 }
