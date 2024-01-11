@@ -10,6 +10,7 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/gin-contrib/cors"
     "log"
+    "os"
 )
 
 func main() {
@@ -26,7 +27,7 @@ func loadDatabase() {
 }
 
 func loadEnv() {
-    err := godotenv.Load(".env.local")
+    err := godotenv.Load(".env")
     if err != nil {
         log.Fatal("Error loading .env file")
     }
@@ -36,7 +37,7 @@ func startServer() {
     router := gin.Default()
 
     config := cors.DefaultConfig()
-    config.AllowOrigins = []string{"http://localhost:3000"}
+    config.AllowOrigins = []string{os.Getenv("FRONTEND_URL")}
     config.AllowCredentials = true
     router.Use(cors.New(config))
 
