@@ -39,7 +39,9 @@ const CreatePost: React.FC = () => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         try {
-            const res = await axios.post("http://localhost:8000/api/posts/add", data, { withCredentials: true });
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/posts/add`, data, {
+                withCredentials: true,
+            });
             const category = res.data.Category;
             const postID = res.data.ID;
             navigate(`/posts/${category}/${postID}`);
