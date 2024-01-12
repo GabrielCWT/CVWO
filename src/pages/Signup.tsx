@@ -13,6 +13,9 @@ const Login: React.FC = () => {
         try {
             await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/signup`, data);
             setCurrentUser({ isSignedIn: true, username: data.get("username") as string });
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/login`, data, {
+                withCredentials: true,
+            });
         } catch (err) {
             const error = err as AxiosError;
             const errorMessage = JSON.parse(error.request.response).error;
