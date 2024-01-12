@@ -10,8 +10,7 @@ import PostPage from "./pages/PostPage";
 import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { blue, orange } from "@mui/material/colors";
+
 import axios from "axios";
 
 type CurrentUser = {
@@ -23,13 +22,6 @@ type CurrentUserContextType = {
     currentUser: CurrentUser;
     setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUser>>;
 };
-
-const theme = createTheme({
-    palette: {
-        primary: blue,
-        secondary: orange,
-    },
-});
 
 export const CurrentUserContext = createContext<CurrentUserContextType>({
     currentUser: { isSignedIn: false, username: "" },
@@ -48,24 +40,22 @@ const App: React.FC = () => {
     }, []);
     return (
         <div className="App">
-            <ThemeProvider theme={theme}>
-                <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
-                    <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<Layout />}>
-                                <Route index element={<Home />} />
-                                <Route path="posts/:category?/" element={<PostsPage />} />
-                                <Route path="posts/:category/:postID" element={<PostPage />} />
-                                <Route path="posts/:category/:postID/edit" element={<EditPost />} />
-                                <Route path="posts/create" element={<CreatePost />} />
-                                <Route path="signup" element={<Signup />} />
-                                <Route path="login" element={<Login />} />
-                                <Route path="logout" element={<Logout />} />
-                            </Route>
-                        </Routes>
-                    </BrowserRouter>
-                </CurrentUserContext.Provider>
-            </ThemeProvider>
+            <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Layout />}>
+                            <Route index element={<Home />} />
+                            <Route path="posts/:category?/" element={<PostsPage />} />
+                            <Route path="posts/:category/:postID" element={<PostPage />} />
+                            <Route path="posts/:category/:postID/edit" element={<EditPost />} />
+                            <Route path="posts/create" element={<CreatePost />} />
+                            <Route path="signup" element={<Signup />} />
+                            <Route path="login" element={<Login />} />
+                            <Route path="logout" element={<Logout />} />
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </CurrentUserContext.Provider>
         </div>
     );
 };
