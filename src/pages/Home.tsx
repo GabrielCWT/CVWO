@@ -1,32 +1,58 @@
-import PostPreview from "../types/PostPreview";
-import { getAllPosts } from "../scripts/apiHelpers";
-import Posts from "../components/Posts";
-import Error from "../components/Error";
-import Loading from "../components/Loading";
 import { CurrentUserContext } from "../App";
-import React, { Suspense, useContext, useEffect } from "react";
-import { Container } from "@mui/material";
-
+import React, { useContext, useState } from "react";
+import { Box, Button, Container, Fade, Typography } from "@mui/material";
+import { TypeAnimation } from "react-type-animation";
+import { useNavigate } from "react-router-dom";
 const Home: React.FC = () => {
-    const [posts, setPosts] = React.useState<PostPreview[] | null>(null);
-    const [hasError, setError] = React.useState<boolean>(false);
-    useEffect(() => {
-        getAllPosts()
-            .then((posts) => setPosts(posts))
-            .catch(() => setError(true));
-    }, []);
     const { currentUser } = useContext(CurrentUserContext);
+    const [isTyping, setIsTyping] = useState<boolean>(true);
+    const navigate = useNavigate();
     return (
         <Container>
-            {currentUser.isSignedIn && <h1>{`Welcome, ${currentUser.username}!`}</h1>}
-            <h3>
-                {"Welcome to CVWO's sample react app! Here's a basic list of forum threads for you to experiment with."}
-            </h3>
-            <br />
-
-            <Suspense fallback={<Loading />}>
-                {hasError ? <Error /> : posts ? <Posts data={posts} /> : <Loading />}
-            </Suspense>
+            <Typography component="div" variant="h5" textAlign="center">
+                {currentUser.isSignedIn ? (
+                    <TypeAnimation
+                        cursor={false}
+                        sequence={[
+                            `Welcome back ${currentUser.username}`,
+                            () => {
+                                setIsTyping(false);
+                            },
+                        ]}
+                        wrapper="h1"
+                    />
+                ) : (
+                    <TypeAnimation
+                        cursor={false}
+                        sequence={[
+                            "Welcome to the CWVO",
+                            300,
+                            "Welcome to the C",
+                            300,
+                            "Welcome to the CVWO Forum",
+                            () => {
+                                setIsTyping(false);
+                            },
+                        ]}
+                        deletionSpeed={30}
+                        wrapper="h1"
+                    />
+                )}
+            </Typography>
+            {!isTyping && !currentUser.isSignedIn ? (
+                <Box display="flex" fontSize="1.2rem" justifyContent="center" gap={3}>
+                    <Fade in={true}>
+                        <Button variant="outlined" size="large" onClick={() => navigate("/signup")}>
+                            Sign Up
+                        </Button>
+                    </Fade>
+                    <Fade in={true}>
+                        <Button variant="contained" size="large" color="primary" onClick={() => navigate("/login")}>
+                            Log In
+                        </Button>
+                    </Fade>
+                </Box>
+            ) : null}
         </Container>
     );
 };

@@ -8,12 +8,12 @@ import Logout from "./pages/Logout";
 import PostsPage from "./pages/PostsPage";
 import EditPost from "./pages/EditPost";
 import PostPage from "./pages/PostPage";
+import Loading from "./components/Loading";
 import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import axios from "axios";
-import Loading from "./components/Loading";
 
 type CurrentUser = {
     isSignedIn: boolean;
