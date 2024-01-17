@@ -41,7 +41,9 @@ const Login: React.FC = () => {
             <Box component="form" sx={{ display: "grid", gap: 5 }} onSubmit={handleSubmit}>
                 <TextField id="username" name="username" label="Username" variant="standard" required autoFocus />
                 <TextField id="password" name="password" label="Password" variant="standard" required />
-                <FormHelperText id="my-helper-text">{helperMessage}</FormHelperText>
+                <FormHelperText id="my-helper-text" error>
+                    {helperMessage}
+                </FormHelperText>
                 <Button type="submit" variant="contained">
                     Submit
                 </Button>

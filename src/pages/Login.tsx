@@ -45,7 +45,9 @@ const Login: React.FC = () => {
                     <TextField id="username" name="username" label="Username" variant="standard" required autoFocus />
                     <TextField id="password" name="password" label="Password" variant="standard" required />
                 </Box>
-                <FormHelperText id="my-helper-text">{helperMessage}</FormHelperText>
+                <FormHelperText id="my-helper-text" error>
+                    {helperMessage}
+                </FormHelperText>
                 <Link to="/signup">{"Don't have an account? Register here"}</Link>
                 <Button type="submit" variant="contained">
                     Submit
