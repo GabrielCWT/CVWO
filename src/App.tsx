@@ -13,7 +13,7 @@ import React, { createContext, useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import axios from "axios";
+import axios, { AxiosError, isAxiosError } from "axios";
 
 type CurrentUser = {
     isSignedIn: boolean;
@@ -40,8 +40,10 @@ const App: React.FC = () => {
             .then((res) => {
                 setCurrentUser({ isSignedIn: true, username: res.data.username });
             })
-            .catch(() => {
-                setHasError(true);
+            .catch((e: Error | AxiosError) => {
+                if (isAxiosError(e) && e.response?.status !== 400) {
+                    setHasError(true);
+                }
             })
             .finally(() => {
                 setIsLoading(false);
