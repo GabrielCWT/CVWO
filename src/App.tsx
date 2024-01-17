@@ -1,4 +1,5 @@
 import Home from "./pages/Home";
+import Error from "./components/Error";
 import CreatePost from "./pages/CreatePost";
 import Signup from "./pages/Signup";
 import Layout from "./components/Layout";
@@ -12,6 +13,7 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import axios from "axios";
+import Loading from "./components/Loading";
 
 type CurrentUser = {
     isSignedIn: boolean;
@@ -30,14 +32,27 @@ export const CurrentUserContext = createContext<CurrentUserContextType>({
 
 const App: React.FC = () => {
     const [currentUser, setCurrentUser] = useState<CurrentUser>({ isSignedIn: false, username: "" });
+    const [hasError, setHasError] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     useEffect(() => {
         axios
             .get(`${process.env.REACT_APP_BACKEND_URL}/auth/verify`, { withCredentials: true })
             .then((res) => {
                 setCurrentUser({ isSignedIn: true, username: res.data.username });
             })
-            .catch(() => {});
+            .catch(() => {
+                setHasError(true);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, []);
+    if (hasError) {
+        return <Error />;
+    }
+    if (isLoading) {
+        return <Loading />;
+    }
     return (
         <div className="App">
             <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
